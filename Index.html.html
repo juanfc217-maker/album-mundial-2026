@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Álbum Mundial 2026 — Láminas Faltantes</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500&display=swap');
+
+  :root { --bd:#0a1f5c; --bm:#1a4ab0; --bl:#4a90d9; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background:linear-gradient(150deg,#0a1f5c 0%,#1a4ab0 50%,#4a90d9 100%);
+    min-height:100vh; font-family:'Barlow',sans-serif; padding:24px 16px 60px;
+  }
+
+  header { text-align:center; margin-bottom:18px; }
+  .badge {
+    display:inline-block; background:rgba(255,255,255,0.12);
+    border:2px solid rgba(255,255,255,0.28); border-radius:6px;
+    padding:5px 16px; color:#a8c8f0;
+    font-family:'Barlow Condensed',sans-serif; font-size:12px;
+    font-weight:700; letter-spacing:3px; margin-bottom:8px;
+  }
+  header h1 {
+    font-family:'Bebas Neue',sans-serif; font-size:46px;
+    color:#fff; letter-spacing:3px; line-height:1;
+    text-shadow:0 4px 20px rgba(0,0,0,0.4);
+  }
+  header h1 span { color:#7ec8f5; }
+  .owners {
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:18px; font-weight:700; letter-spacing:2px;
+    color:rgba(255,255,255,0.85); margin-bottom:4px;
+    text-shadow:0 2px 10px rgba(0,0,0,0.3);
+  }
+  .sub {
+    font-family:'Barlow Condensed',sans-serif;
+    color:rgba(255,255,255,0.6); font-size:14px; letter-spacing:2px; margin-top:5px;
+  }
+
+  .statsbar {
+    max-width:980px; margin:0 auto 16px;
+    background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2);
+    border-radius:10px; padding:12px 20px;
+    display:flex; align-items:center; gap:20px; flex-wrap:wrap;
+  }
+  .stat { font-family:'Barlow Condensed',sans-serif; color:#fff; font-size:15px; }
+  .stat strong { font-size:22px; font-weight:700; }
+  .stat.missing strong { color:#f5a623; }
+  .stat.found strong { color:#7ed67e; }
+  .progress-wrap { flex:1; min-width:120px; }
+  .progress-bar { height:10px; background:rgba(255,255,255,0.15); border-radius:5px; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,#7ed67e,#2ecc71); border-radius:5px; transition:width 0.4s; }
+  .progress-label { font-family:'Barlow Condensed',sans-serif; color:rgba(255,255,255,0.7); font-size:12px; margin-top:3px; text-align:right; }
+
+  .tip {
+    max-width:980px; margin:0 auto 12px;
+    background:rgba(255,255,255,0.1); border-left:3px solid #7ec8f5;
+    border-radius:4px; padding:7px 12px;
+    color:rgba(255,255,255,0.75);
+    font-family:'Barlow Condensed',sans-serif; font-size:13px; letter-spacing:0.5px;
+  }
+
+  .search-wrap { max-width:980px; margin:0 auto 14px; display:flex; gap:8px; }
+  .search-wrap input {
+    flex:1; padding:9px 14px; border-radius:8px;
+    border:2px solid rgba(255,255,255,0.25);
+    background:rgba(255,255,255,0.12); color:#fff;
+    font-family:'Barlow Condensed',sans-serif; font-size:15px; letter-spacing:1px; outline:none;
+  }
+  .search-wrap input::placeholder { color:rgba(255,255,255,0.4); }
+  .filter-btn {
+    padding:9px 16px; border-radius:8px; border:2px solid rgba(255,255,255,0.25);
+    background:rgba(255,255,255,0.12); color:#fff;
+    font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:700;
+    cursor:pointer; transition:all 0.2s; letter-spacing:1px;
+  }
+  .filter-btn.active, .filter-btn:hover { background:rgba(255,255,255,0.28); border-color:rgba(255,255,255,0.5); }
+
+  .grid {
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(255px,1fr));
+    gap:12px; max-width:980px; margin:0 auto;
+  }
+
+  .card {
+    background:rgba(255,255,255,0.96); border-radius:10px;
+    overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.22);
+    transition:transform 0.2s;
+  }
+  .card:hover { transform:translateY(-2px); }
+  .card-header {
+    background:linear-gradient(90deg,var(--bd),var(--bm));
+    padding:8px 12px; display:flex; align-items:center; gap:8px;
+  }
+
+  .card.complete .card-header { background:linear-gradient(90deg,#1b5e20,#27ae60); }
+
+  .flag { font-size:19px; }
+  .tname { font-family:'Bebas Neue',sans-serif; font-size:19px; color:#fff; letter-spacing:1.5px; flex:1; }
+  .cbadge {
+    background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.28);
+    border-radius:20px; color:rgba(255,255,255,0.85);
+    font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700;
+    padding:2px 8px; white-space:nowrap;
+  }
+
+  .card-body { padding:10px 12px 12px; }
+  .stickers { display:flex; flex-wrap:wrap; gap:5px; }
+
+  .sticker {
+    border-radius:5px; border:1.5px solid #b3cce8;
+    background:#e8f0fb; color:var(--bd);
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:13px; font-weight:700; padding:3px 7px;
+    cursor:pointer; transition:all 0.18s; user-select:none;
+  }
+  .sticker:hover { border-color:#1a4ab0; background:#d0e4f7; }
+  .sticker.got {
+    background:#d4edda; border-color:#82c99a; color:#1b5e20;
+    text-decoration:line-through; opacity:0.55;
+  }
+
+
+  .all-done { font-family:'Barlow Condensed',sans-serif; color:#27ae60; font-size:14px; font-weight:700; }
+
+  footer { text-align:center; margin-top:32px; color:rgba(255,255,255,0.35); font-family:'Barlow Condensed',sans-serif; font-size:12px; letter-spacing:1px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Panini · FIFA World Cup 2026</div>
+  <div class="owners">⚽ Juan Felipe &amp; María José ⚽</div>
+  <h1>LÁMINAS <span>FALTANTES</span></h1>
+  <div class="sub">MUNDIAL 2026 — ÁLBUM INTERACTIVO</div>
+</header>
+
+<div class="statsbar">
+  <div class="stat missing">Faltan <strong id="sMissing">0</strong></div>
+  <div class="stat found">Conseguidas <strong id="sFound">0</strong></div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pFill" style="width:0%"></div></div>
+    <div class="progress-label" id="pLabel">0%</div>
+  </div>
+</div>
+
+<div class="tip">💡 Toca una lámina para marcarla como conseguida. El progreso se guarda en este dispositivo.</div>
+
+<div class="search-wrap">
+  <input type="text" id="searchInput" placeholder="Buscar equipo o número..." oninput="render()">
+  <button class="filter-btn active" id="btnAll" onclick="setFilter('all')">Todas</button>
+  <button class="filter-btn" id="btnMissing" onclick="setFilter('missing')">Solo faltantes</button>
+</div>
+
+<div class="grid" id="grid"></div>
+<footer>Mundial 2026 · Álbum Panini · Hecho con Claude</footer>
+
+<script>
+const TEAMS = [
+  // ── PLANILLA 1 ──
+  { code:"FWC",  name:"Especiales",       flag:"🏆", missing:[8,18] },
+  { code:"MEX",  name:"México",           flag:"🇲🇽", missing:[2,3,7,8,9,10,12,13,15,17,18,19] },
+  { code:"RSA",  name:"Sudáfrica",        flag:"🇿🇦", missing:[1,8,9,12,13,17,18] },
+  { code:"KOR",  name:"Corea del Sur",    flag:"🇰🇷", missing:[8,10,11,12,13,15,16,17] },
+  { code:"CZE",  name:"Rep. Checa",       flag:"🇨🇿", missing:[1,4,7,11,12,14,17,18,19] },
+  { code:"CAN",  name:"Canadá",           flag:"🇨🇦", missing:[2,17,20] },
+  { code:"BIH",  name:"Bosnia",           flag:"🇧🇦", missing:[1,3,4,5,7,8,9,11,14,16] },
+  { code:"QAT",  name:"Catar",            flag:"🇶🇦", missing:[1,3,12] },
+  { code:"SUI",  name:"Suiza",            flag:"🇨🇭", missing:[1,4,6,8,9,11,13,16,17,20] },
+  { code:"BRA",  name:"Brasil",           flag:"🇧🇷", missing:[2,3,5,10,11,13,17,18,19] },
+  { code:"MAR",  name:"Marruecos",        flag:"🇲🇦", missing:[2,5,9,11,14,15,16,18] },
+  { code:"HAI",  name:"Haití",            flag:"🇭🇹", missing:[2,6,7,10,14,15,16,17,19] },
+  { code:"SCO",  name:"Escocia",          flag:"🏴󠁧󠁢󠁳󠁣󠁴󠁿", missing:[1,6,8,10,11,16,19] },
+  { code:"USA",  name:"Estados Unidos",   flag:"🇺🇸", missing:[8,9,13,14,17] },
+  { code:"PAR",  name:"Paraguay",         flag:"🇵🇾", missing:[1,4,5,7,9,11,16,18,19,20] },
+  { code:"AUS",  name:"Australia",        flag:"🇦🇺", missing:[1,2,3,4,5,6,7,8,10,11,12,15,16,17,18,19,20] },
+  { code:"TUR",  name:"Turquía",          flag:"🇹🇷", missing:[1,3,5,8,13,18] },
+  { code:"GER",  name:"Alemania",         flag:"🇩🇪", missing:[1,3,5,7,8,13,16,19,20] },
+  { code:"CUW",  name:"Curazao",          flag:"🏝️", missing:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], cuw:true },
+  { code:"CIV",  name:"Costa de Marfil",  flag:"🇨🇮", missing:[1,2,4,9,10,11,13,17,20] },
+  { code:"ECU",  name:"Ecuador",          flag:"🇪🇨", missing:[2,3,6,7,9,10,11,13,14,15,17,18,20] },
+  { code:"NED",  name:"Países Bajos",     flag:"🇳🇱", missing:[1,2,3,8,9,11,12,13] },
+  { code:"SME",  name:"Suecia",           flag:"🇸🇪", missing:[3,6,8,11,17] },
+  { code:"TUN",  name:"Túnez",            flag:"🇹🇳", missing:[2,5,13,16,18] },
+  { code:"BEL",  name:"Bélgica",          flag:"🇧🇪", missing:[5,8,10,11,13,16,18,20] },
+  // ── PLANILLA 2 ──
+  { code:"EGY",  name:"Egipto",           flag:"🇪🇬", missing:[5,7,8,10,11,12,14,15,16,18,20] },
+  { code:"IRN",  name:"Irán",             flag:"🇮🇷", missing:[1,4,5,8,12,13,18,20] },
+  { code:"NZL",  name:"Nueva Zelanda",    flag:"🇳🇿", missing:[3,6,7,10,11,13,14,19] },
+  { code:"ESP",  name:"España",           flag:"🇪🇸", missing:[1,2,3,5,7,8,11,15,16,19,20] },
+  { code:"CPV",  name:"Cabo Verde",       flag:"🇨🇻", missing:[1,4,12,13,14,15,16,19] },
+  { code:"KSA",  name:"Arabia Saudita",   flag:"🇸🇦", missing:[4,5,9,10,11,12,13,20] },
+  { code:"URU",  name:"Uruguay",          flag:"🇺🇾", missing:[1,2,3,4,5,7,8,13,16,18] },
+  { code:"FRA",  name:"Francia",          flag:"🇫🇷", missing:[2,5,6,8,9,10,11,14,15] },
+  { code:"SEN",  name:"Senegal",          flag:"🇸🇳", missing:[2,13,17,18,19] },
+  { code:"IRO",  name:"Irak",             flag:"🇮🇶", missing:[1,4,8,10,13,14,16,17,18,19] },
+  { code:"NOR",  name:"Noruega",          flag:"🇳🇴", missing:[1,7,8,11,12,17] },
+  { code:"ARG",  name:"Argentina",        flag:"🇦🇷", missing:[3,6,10,12,15,17,18,19] },
+  { code:"ALG",  name:"Argelia",          flag:"🇩🇿", missing:[2,5,8,10,13,14,15,17,18,19,20] },
+  { code:"AUT",  name:"Austria",          flag:"🇦🇹", missing:[8,10,13,16,18] },
+  { code:"JOR",  name:"Jordania",         flag:"🇯🇴", missing:[1,13,15] },
+  { code:"POR",  name:"Portugal",         flag:"🇵🇹", missing:[1,2,4,5,6,7,8,12,14,20] },
+  { code:"COD",  name:"Congo (RD)",       flag:"🇨🇩", missing:[1,9,10,12,13,15,16,18,19,20] },
+  { code:"UZB",  name:"Uzbekistán",       flag:"🇺🇿", missing:[2,11,13,14,19,20] },
+  { code:"COL",  name:"Colombia",         flag:"🇨🇴", missing:[4,6,9,15] },
+  { code:"ENG",  name:"Inglaterra",       flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿", missing:[1,2,4,5,6,7,9,14,17] },
+  { code:"CRO",  name:"Croacia",          flag:"🇭🇷", missing:[4,6,15] },
+  { code:"GHA",  name:"Ghana",            flag:"🇬🇭", missing:[1,2,5,9,10,12,15,20] },
+  { code:"PAN",  name:"Panamá",           flag:"🇵🇦", missing:[1,7,9,10,11,13,16,20] },
+  { code:"JPN",  name:"Japón",            flag:"🇯🇵", missing:[] },
+];
+
+// ── STATE ──────────────────────────────────────────────────────────────────
+const STORAGE_KEY = 'mundial2026_got';
+let got = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+let filter = 'all';
+
+function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(got)); }
+
+function toggle(code, num) {
+  const k = code + '_' + num;
+  got[k] = !got[k];
+  save(); render(); updateStats();
+}
+
+function isGot(code, num) { return !!got[code + '_' + num]; }
+
+// ── STATS ──────────────────────────────────────────────────────────────────
+function updateStats() {
+  let total = 0, found = 0;
+  TEAMS.forEach(t => {
+    t.missing.forEach(n => {
+      total++;
+      if (isGot(t.code, n)) found++;
+    });
+  });
+  const missing = total - found;
+  document.getElementById('sMissing').textContent = missing;
+  document.getElementById('sFound').textContent = found;
+  const pct = total ? Math.round(found / total * 100) : 0;
+  document.getElementById('pFill').style.width = pct + '%';
+  document.getElementById('pLabel').textContent = pct + '%';
+}
+
+// ── FILTER ─────────────────────────────────────────────────────────────────
+function setFilter(f) {
+  filter = f;
+  document.getElementById('btnAll').classList.toggle('active', f === 'all');
+  document.getElementById('btnMissing').classList.toggle('active', f === 'missing');
+  render();
+}
+
+// ── RENDER ─────────────────────────────────────────────────────────────────
+function render() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+
+  TEAMS.forEach(t => {
+    // filter by search
+    if (q && !t.name.toLowerCase().includes(q) && !t.code.toLowerCase().includes(q) &&
+        !t.missing.some(n => (t.code + n).toLowerCase().includes(q))) return;
+
+    const pending = t.missing.filter(n => !isGot(t.code, n));
+
+    // filter by status
+    if (filter === 'missing' && pending.length === 0 && t.missing.length > 0) return;
+
+    const card = document.createElement('div');
+    card.className = 'card' + (t.cuw ? ' cuw' : '') + (pending.length === 0 && t.missing.length > 0 ? ' complete' : '');
+
+    const countLabel = t.missing.length === 0
+      ? '✅ Completo'
+      : pending.length === 0
+        ? '✅ ¡Listo!'
+        : pending.length + ' faltantes';
+
+    let stickersHTML = '';
+    if (t.missing.length === 0) {
+      stickersHTML = '<span class="all-done">✅ Álbum completo en este equipo</span>';
+    } else if (pending.length === 0) {
+      stickersHTML = '<span class="all-done">🎉 ¡Conseguiste todas!</span>';
+    } else {
+      stickersHTML = t.missing.map(n => {
+        const g = isGot(t.code, n);
+        if (filter === 'missing' && g) return '';
+        return `<span class="sticker${g ? ' got' : ''}" onclick="toggle('${t.code}',${n})">${t.code}${n}</span>`;
+      }).join('');
+    }
+
+    card.innerHTML = `
+      <div class="card-header">
+        <span class="flag">${t.flag}</span>
+        <span class="tname">${t.name}</span>
+        <span class="cbadge">${countLabel}</span>
+      </div>
+      <div class="card-body">
+        <div class="stickers">${stickersHTML}</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+
+  updateStats();
+}
+
+render();
+</script>
+</body>
+</html>
